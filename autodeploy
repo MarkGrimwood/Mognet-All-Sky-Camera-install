@@ -1,0 +1,201 @@
+#!/bin/bash
+
+function installs() {
+  # Ensure we're up to date
+  sudo apt-get -y update
+  sudo apt-get -y upgrade
+  sudo apt-get clean
+  sudo apt-get autoclean
+  sudo apt-get autoremove
+
+  # Install the web server and enable it
+  sudo apt-get -y install lighttpd php php-cgi php-gd
+  sudo lighty-enable-mod fastcgi
+  sudo lighty-enable-mod fastcgi-php
+  sudo service lighttpd force-reload
+
+  # Install ffmpeg so the day and night videos can be created
+  sudo apt -y install ffmpeg
+
+  # Imagemagick for adding text to images
+  sudo apt -y install imagemagick
+}
+
+function setup() {
+  # The shell scripts for cron have to be in a certain place, so we ensure that everything is in the install directory first
+  if [ "$CURRENTDIRECTORY" != "$INSTALLDIRECTORY" ]; then
+    cp -r "$CURRENTDIRECTORY/" "$INSTALLDIRECTORY/"
+  fi
+
+  ## Clean out the web directory and copy our stuff into it
+  sudo mkdir /var/www/html/
+  sudo rm /var/www/html/*
+  sudo cp -r $INSTALLDIRECTORY/front-end/* /var/www/html/
+  sudo mkdir /var/www/html/{history,night,day}
+  sudo chown nobody /var/www/html/{history,night,day,*.php,*.html,*.gif,*.css}
+
+  ## Make sunwait into and executable and copy it across to the common respository
+  sudo chmod 755 $INSTALLDIRECTORY/back-end/sunwait/sunwait
+  sudo cp $INSTALLDIRECTORY/back-end/sunwait/sunwait /usr/bin/
+
+  ## Create the new day and night movies ready for execution start
+  # We don't know if we're being deployed during the day or night, so both will be created ready
+  # TODO - see about calling sunwait to determine day/night state
+  cd $INSTALLDIRECTORY/back-end/pics/
+  echo $PWD
+  sudo chmod 755 newdaymovie.sh
+  sudo chmod 755 newnightmovie.sh
+  sudo chmod 755 captureday.sh
+  sudo chmod 755 capturenight.sh
+  sudo ./newdaymovie.sh
+  sudo ./newnightmovie.sh
+
+  ## Run the execution setup script
+  # This will be the final item of the autodeploy script as execution starts immediately after
+  # After deployment this will also be run daily at noon
+  cd $INSTALLDIRECTORY/back-end/
+  sudo chmod 755 mgasc
+  sudo ./mgasc
+}
+
+function getLatitude() {
+  echo "Please enter the latitude (N or S) of your location, e.g. 52.20N"
+
+  # Using 0 as true and -1 as false here
+  testedGood=-1
+  while [ $testedGood -ne 0 ];do
+    read validateThis
+    testLatLong "$validateThis" "N" "S" "n" "s"
+    if [ $? -eq 0 ]; then
+      llLength=${#validateThis}
+      llNumeric=${validateThis:0:$llLength-1}
+      llSide=${validateThis: -1}
+      if [ "$llSide" == "n" ]; then
+        llSide="N"
+      fi
+      if [ "$llSide" == "s" ]; then
+        llSide="S"
+      fi
+      lat=$(printf "%.2f$llSide" "$llNumeric")
+      testedGood=0
+    else
+      echo "Try again, $validateThis is invalid"
+    fi
+  done
+}
+
+function getLongitude() {
+  echo "Please enter the longitude (E or W) of your location, e.g. 0.13E"
+
+  # Using 0 as true and -1 as false here
+  testedGood=-1
+  while [ $testedGood -ne 0 ];do
+    read validateThis
+    testLatLong "$validateThis" "E" "W" "e" "w"
+    if [ $? -eq 0 ]; then
+      llLength=${#validateThis}
+      llNumeric=${validateThis:0:$llLength-1}
+      llSide=${validateThis: -1}
+      if [ "$llSide" == "e" ]; then
+        llSide="E"
+      fi
+      if [ "$llSide" == "w" ]; then
+        llSide="W"
+      fi
+      lon=$(printf "%.2f$llSide" "$llNumeric")
+      testedGood=0
+    else
+      echo "Try again, $validateThis is invalid"
+    fi
+  done
+}
+
+function testLatLong() {
+  validateThis=${1}
+  test1=${2}
+  test2=${3}
+  test3=${4}
+  test4=${5}
+
+  if [[ "$validateThis" =~ [0-9]+(\.([0-9]+)?)?[$test1|$test2|$test3|$test4] ]]; then
+    latLength=${#validateThis}
+    latNumeric=${validateThis:0:$latLength-1}
+    latSide=${validateThis: -1}
+
+    ch=""
+    outStr="0"
+    testLength=${#latNumeric}
+    for ((i=0; i<$testLength; i++)); do
+      ch=${latNumeric:i:1}
+      if [ "$ch" != "." ]; then
+        outStr="$outStr$ch"
+      else
+        i=$(( latLength + 1 ))
+      fi
+    done
+
+    if [ $outStr -ge -180 ] && [ $outStr -le 180 ]; then
+      ret=0
+    else
+      echo "Invalid: $validateThis, out of 0-180 range"
+      ret=-1
+    fi
+  else
+    echo "Invalid: $validateThis, invalid format"
+    ret=1
+  fi
+
+  return $ret
+}
+
+CURRENTDIRECTORY=$PWD
+INSTALLDIRECTORY="/home/pi/Mognet-All-Sky-Camera"
+
+lat=0
+lon=0
+
+clear
+echo "Welcome to the setup stage of Mognet's All Sky Camera"
+echo "====================================================="
+echo "This script has is intended to be run on a Raspberry Pi, preferably with a clean install of Raspian"
+echo "As part of the install process lighttpd, ffmpeg and imagemagick will be installed, the /var/www/html/ directory will be wiped and the front end code copied into it, and a cron job running once per minute during the day (or every two minutes at night) will be started to run 24 hours a day"
+echo "If you are certain that you want to proceed then answer Y to continue, otherwise N or Ctrl-C to exit"
+
+installGood=-1	# Using the values -1=false, 0=no install, 1=install
+while [ $installGood -eq -1 ]; do
+  read installConfirm
+  if [ $installConfirm == "y" ] || [ $installConfirm == "Y" ]; then
+    installGood=1
+  elif [ $installConfirm == "n" ] || [ $installConfirm == "N" ]; then
+    installGood=0
+  else
+    echo "Please enter only Y or N"
+  fi
+done
+
+if [ $installGood -eq 1 ]; then
+  echo "The latitude and longitude of your camera location is required. This can be approximate as it's only used for the sunrise and sunset timings"
+  getLatitude
+  getLongitude
+  echo -e "$lat\n$lon">back-end/gps
+
+  echo "About to install the all sky camera. Press enter when ready..."
+  read installCheck
+  installs
+  setup
+
+  echo "====================================================="
+  echo ""
+  echo "The all sky camera capture software has now been set up"
+  echo "Location used is latitude $lat, longitude $lon"
+  echo ""
+  echo "Access to the images is from a web browser on the same network using either:"
+  echo ""
+  ipAddressList=($(hostname -I))
+  echo "IP Address: http://${ipAddressList[0]}/" 
+  echo "URL: http://$HOSTNAME/"
+  echo ""
+  echo "====================================================="
+else
+  echo "Install cancelled"
+fi

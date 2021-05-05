@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Sky Camera - About</title>
+    <link rel="stylesheet" href="mgasc.css" type="text/css">
+  </head>
+<h1>Raspberry Pi based all sky camera</h1>
+<body>
+<p>
+Raspberry Pi based all sky camera software by Mark Grimwood (<a href='https://stargazerslounge.com/profile/52903-mognet/'>Mognet</a> on <a href='https://stargazerslounge.com/'>Stargazer's Lounge</a>). 
+Based on <a href='https://github.com/rederikus/AllSky-Camera-Raspberry-Pi'>Pete's all sky camera</a> (<a href='https://stargazerslounge.com/topic/353678-raspberry-pi-allsky-camera/'>discussion thread on SGL</a>)<br>
+<br>
+Images are taken every minute during the daytime and every two minutes at night, and each image is added to a video for that period. The images are date and time stamped, and the stamps also appear in the videos<br>
+<br>
+A history of videos and images is preserved until space on the memory card runs low, after which the oldest period(s) will be deleted to ensure enough space for the next set of captures. Clean up code runs when available space drops below 2Gb at the start of a capture period<br>
+<br>
+The code has been written to be light enough to run on a Pi Zero without stressing it, and the results viewable in a browser on PC, laptop, tablet and mobile phone<br>
+<br>
+Day and night camera modes are automatically catered for and switching occurs at the appropriate times. Image capture and processing is based on a Cron job, and the times are regenerated daily at noon<br>
+</p>
+</body>
+</html>

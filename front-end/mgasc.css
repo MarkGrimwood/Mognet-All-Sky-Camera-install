@@ -1,0 +1,54 @@
+body {
+  background-color: black;
+  color: white;
+}
+
+table.shotlist {
+  width: 100%;
+}
+
+table, th, td {
+  text-align: center;
+  border: 1px solid gray;
+  border-collapse: collapse;
+  padding: 5px;
+}
+
+th {
+  background-color: #0f0f0f;
+}
+
+.tableitemleftalign {
+  text-align: left;
+}
+
+div.imageSection::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.image {
+  float: left;
+  width: 80%;
+  padding: 5px;
+}
+
+.leftArrow, .rightArrow {
+  float: left;
+  width: 7%;
+  padding: 5px;
+}
+
+a:link {
+  color: cornflowerblue;
+}
+
+a:visited {
+  color: darkviolet;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}

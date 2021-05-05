@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<?php
+include 'fileread.php';
+?>
+
+<html>
+  <head>
+    <meta charset="UTF-8"><!-- name="viewport" content="width=device-width, initial-scale=1.0"-->
+    <title>All Sky Camera - Live View</title>
+    <link rel="stylesheet" href="mgasc.css" type="text/css">
+  </head>
+		<body>		
+		<script type="text/javascript">
+			var shotinterval = 60;    // Seconds between shots
+			var shottimer = null;      // Countdown timer to the next shot
+			var sss = null;            // Display timer to the next shot
+			var shootingnow = false;   // To avoid parallel execution
+
+			// Start the timer
+			function start() {
+				shottimer = window.setTimeout(shoot, 1000 * shotinterval);
+				sss = setTimeout(showTime, 1000 * shotinterval);
+			}
+
+			// Stop the timer
+			// Return previous state (was it running? true/false)
+			function stop() {
+				if (shottimer) {
+					window.clearTimeout(shottimer);
+					shottimer = null;
+					return true;
+				}
+				return false;
+			}
+
+			// Refresh the webcam image by re-setting the src attribute
+			function shoot() {
+				shootingnow = true;
+				var img; 
+				if (img = document.getElementById("view"))  
+					img.src = "webcam.php?" + Date.now();
+				start();
+				shootingnow = false;
+			}
+		</script>
+	</head>
+
+
+	<body onload="start()">
+		<img id="view" src="webcam.php" alt="[webcam]" title="AllSky" />
+		<script>
+		    document.write('<a href="' + document.referrer + '>Back</a>...........................');
+  		</script>
+	</body>
+</html>
