@@ -8,11 +8,11 @@ Using an RPi Zero has the advantage of being low cost, meaning that if it gets s
 
 # Parts
 
-A Raspberry Pi Zero WH (or W) like this: https://thepihut.com/collections/raspberry-pi/products/raspberry-pi-zero-wh-with-pre-soldered-header
-A Raspberry Pi V2 camera module. It doesn't matter if it has the IR filter or not https://thepihut.com/collections/raspberry-pi-camera/products/raspberry-pi-noir-camera-module
-A suitable wide angle lens e.g. https://thepihut.com/collections/raspberry-pi-camera-lenses/products/m12-lens-180-degree-fisheye-1-2-5-optical-format-1-7mm-focal-length
-A power supply for the Pi
-A memory card. This needs to be a fast transfer one suitable for video or CCTV capture and ideally 16 or 32Gb in size. My 64Gb card currently holds seven weeks worth of captures!
+* A Raspberry Pi Zero WH (or W) like this: https://thepihut.com/collections/raspberry-pi/products/raspberry-pi-zero-wh-with-pre-soldered-header
+* A Raspberry Pi V2 camera module. It doesn't matter if it has the IR filter or not https://thepihut.com/collections/raspberry-pi-camera/products/raspberry-pi-noir-camera-module
+* A suitable wide angle lens e.g. https://thepihut.com/collections/raspberry-pi-camera-lenses/products/m12-lens-180-degree-fisheye-1-2-5-optical-format-1-7mm-focal-length
+* A power supply for the Pi
+* A memory card. This needs to be a fast transfer one suitable for video or CCTV capture and ideally 16 or 32Gb in size. My 64Gb card currently holds seven weeks worth of captures!
 
 A CCTV type dome if fitting outside. They can also be used from indoors, but double glazing and household lighting can cause internal reflections. There are plenty of examples for building external camera enclosures already, so I won't add to them
 
@@ -38,11 +38,11 @@ Enter sudo raspi-config at the prompt
 Select Finish, and reboot the RPi if required
 
 Now to get the code onto the RPi and install it, so type the following commands
-wget https://github.com/MarkGrimwood/Mognet-All-Sky-Camera-install/archive/refs/heads/main.zip
-unzip main.zip
-cd Mognet-All-Sky-Camera-install-main/
-chmod 755 autodeploy
-./autodeploy
+* wget https://github.com/MarkGrimwood/Mognet-All-Sky-Camera-install/archive/refs/heads/main.zip
+* unzip main.zip
+* cd Mognet-All-Sky-Camera-install-main/
+* chmod 755 autodeploy
+* ./autodeploy
 
 You will be prompted for your latitude and longitude, and then after that everything should automatic. The auto deploy script will also make sure that the updates are done to the RPi. Once complete (approx 10-15 minutes on a RPi Zero) the installer script will give the URL for viewing the captured images, etc and viewing is just through a normal web browser 
 
