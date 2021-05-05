@@ -37,13 +37,11 @@ Enter sudo raspi-config at the prompt
 
 Select Finish, and reboot the RPi if required
 
-Now get to get the code onto the RPi, so type 
-wget -r https://github.com/MarkGrimwood/Mognet-All-Sky-Camera-install
-
-Once it has downloaded go into the install directory and set the autodeploy script to be executable
+Now to get the code onto the RPi and install it, so type the following commands
+wget https://github.com/MarkGrimwood/Mognet-All-Sky-Camera-install/archive/refs/heads/main.zip
+unzip main.zip
+cd Mognet-All-Sky-Camera-install-main/
 chmod 755 autodeploy
-
-Then type
 ./autodeploy
 
 You will be prompted for your latitude and longitude, and then after that everything should automatic. The auto deploy script will also make sure that the updates are done to the RPi. Once complete (approx 10-15 minutes on a RPi Zero) the installer script will give the URL for viewing the captured images, etc and viewing is just through a normal web browser 
