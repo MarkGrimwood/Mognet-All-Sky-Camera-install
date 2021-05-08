@@ -31,8 +31,8 @@ function setup() {
   sudo mkdir /var/www/html/
   sudo rm /var/www/html/*
   sudo cp -r $INSTALLDIRECTORY/front-end/* /var/www/html/
-  sudo mkdir /var/www/html/{history,night,day}
-  sudo chown nobody /var/www/html/{history,night,day,*.php,*.html,*.gif,*.css}
+  sudo mkdir /var/www/html/history
+  sudo chown nobody /var/www/html/{history,*.php,*.html,*.gif,*.css}
 
   ## Make sunwait into and executable and copy it across to the common respository
   sudo chmod 755 $INSTALLDIRECTORY/back-end/sunwait/sunwait
