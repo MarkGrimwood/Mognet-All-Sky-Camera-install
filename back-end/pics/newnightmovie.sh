@@ -34,6 +34,7 @@ done
 # Archive last night's files if they exist
 [ -d "$WEBPATH/night" ] && mv "$WEBPATH/night" "$WEBPATH/history/$DATESTAMP-night"
 mkdir "$WEBPATH/night"
+sudo chown nobody /var/www/html/night
 echo "start:$DATESTAMP">"$WEBPATH/night/info"
 
 # Create the nightly file (should really be done with the movie creation)
