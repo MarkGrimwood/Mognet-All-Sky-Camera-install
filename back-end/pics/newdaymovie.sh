@@ -34,6 +34,7 @@ done
 # Archive last day's files if they exist
 [ -d "$WEBPATH/$PERIOD" ] && mv "$WEBPATH/$PERIOD" "$WEBPATH/history/$DATESTAMP-$PERIOD"
 mkdir "$WEBPATH/$PERIOD"
+sudo chown nobody /var/www/html/$PERIOD
 echo "start:$DATESTAMP">"$WEBPATH/$PERIOD/info"
 
 # Create the daily file (should really be done with the movie creation)
