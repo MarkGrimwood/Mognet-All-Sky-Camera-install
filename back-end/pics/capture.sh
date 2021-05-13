@@ -46,7 +46,7 @@ then
     raspistill -ISO auto -awb greyworld -n -ex auto -w 1440 -h 1080 -o "$STANDARDCAPTURE"
   else
     # Capture the night image. Although set to 10 seconds (I think), it takes 75 seconds on a Pi Zero
-    raspistill -ISO auto -awb auto -n -ex night -w 1440 -h 1080 -co 70 -ag 9.0 -dg 2.0 -ss 10000000 -o "$STANDARDCAPTURE"
+    raspistill -ISO auto -awb greyworld -n -ex night -w 1440 -h 1080 -co 70 -ag 9.0 -dg 2.0 -ss 10000000 -o "$STANDARDCAPTURE"
   fi
 
   # Add date and time stamp
