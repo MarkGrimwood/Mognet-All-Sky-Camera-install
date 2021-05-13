@@ -120,7 +120,7 @@ if [ $installGood -eq 1 ]; then
   echo "The latitude and longitude of your camera location is required. This can be approximate as it's only used for the sunrise and sunset timings"
   getLatitude
   getLongitude
-  echo -e "$lat\n$lon">back-end/gps
+  sudo echo -e "$lat\n$lon">back-end/gps
 
   cd back-end/
   sudo ./mgasc.sh
