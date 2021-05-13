@@ -24,38 +24,41 @@ function installs() {
 function setup() {
   # The shell scripts for cron have to be in a certain place, so we ensure that everything is in the install directory first
   if [ "$CURRENTDIRECTORY" != "$INSTALLDIRECTORY" ]; then
-    cp -r "$CURRENTDIRECTORY/" "$INSTALLDIRECTORY/"
+    echo "Cleaning execution directory $INSTALLDIRECTORY"
+    [ -d $INSTALLDIRECTORY ] && rm -rf $INSTALLDIRECTORY
+    echo "Copying to execution directory"
+    cp -rv $CURRENTDIRECTORY $INSTALLDIRECTORY
   fi
 
   ## Clean out the web directory and copy our stuff into it
-  sudo mkdir /var/www/html/
-  sudo rm /var/www/html/*
-  sudo cp -r $INSTALLDIRECTORY/front-end/* /var/www/html/
+  [ ! -d /var/www/html ] && sudo mkdir /var/www/html/
+  sudo rm -r /var/www/html/*
+  sudo cp -rv $CURRENTDIRECTORY/front-end/* /var/www/html/
   sudo mkdir /var/www/html/history
   sudo chown nobody /var/www/html/{history,*.php,*.html,*.gif,*.css}
 
   ## Make sunwait into and executable and copy it across to the common respository
-  sudo chmod 755 $INSTALLDIRECTORY/back-end/sunwait/sunwait
-  sudo cp $INSTALLDIRECTORY/back-end/sunwait/sunwait /usr/bin/
+  sudo chmod 755 $CURRENTDIRECTORY/back-end/sunwait/sunwait
+  sudo cp -v $CURRENTDIRECTORY/back-end/sunwait/sunwait /usr/bin/
 
   ## Create the new day and night movies ready for execution start
   # We don't know if we're being deployed during the day or night, so both will be created ready
   # TODO - see about calling sunwait to determine day/night state
   cd $INSTALLDIRECTORY/back-end/pics/
-  echo $PWD
-  sudo chmod 755 newdaymovie.sh
-  sudo chmod 755 newnightmovie.sh
-  sudo chmod 755 captureday.sh
-  sudo chmod 755 capturenight.sh
-  sudo ./newdaymovie.sh
-  sudo ./newnightmovie.sh
+  echo "Working in $PWD"
+  sudo chmod 755 newmovie.sh
+  sudo chmod 755 capture.sh
+  sudo ./newmovie.sh day
+  sudo ./newmovie.sh night
 
   ## Run the execution setup script
   # This will be the final item of the autodeploy script as execution starts immediately after
   # After deployment this will also be run daily at noon
   cd $INSTALLDIRECTORY/back-end/
-  sudo chmod 755 mgasc
-  sudo ./mgasc
+  echo "Working in $PWD"
+  sudo chmod 755 mgasc.sh
+  sudo chmod 755 dailyupdate.sh
+  sudo ./mgasc.sh
 }
 
 function getLatitude() {
@@ -148,20 +151,42 @@ function testLatLong() {
   return $ret
 }
 
+function camera_check() {
+  success=1
+  VCSUPPORTED=$(vcgencmd get_camera | grep supported=1 | wc -l)
+  VCENABLED=$(vcgencmd get_camera | grep detected=1 | wc -l)
+
+  if [ $VCSUPPORTED -eq 0 ]; then
+    echo "Please enable the camera through raspi-config before installing"
+    success=0
+  elif [ $VCENABLED -eq 0 ]; then
+    echo "Please connect the camera before installing"
+    success=0
+  fi
+
+  return $success
+}
+
 CURRENTDIRECTORY=$PWD
-INSTALLDIRECTORY="/home/pi/Mognet-All-Sky-Camera"
+INSTALLDIRECTORY=~/Mognet-All-Sky-Camera
 
 lat=0
 lon=0
 
+installGood=-1	# Using the values -1=false, 0=no install, 1=install
+
 clear
 echo "Welcome to the setup stage of Mognet's All Sky Camera"
 echo "====================================================="
-echo "This script has is intended to be run on a Raspberry Pi, preferably with a clean install of Raspian"
-echo "As part of the install process lighttpd, ffmpeg and imagemagick will be installed, the /var/www/html/ directory will be wiped and the front end code copied into it, and a cron job running once per minute during the day (or every two minutes at night) will be started to run 24 hours a day"
-echo "If you are certain that you want to proceed then answer Y to continue, otherwise N or Ctrl-C to exit"
+camera_check
+if [ $? -eq 1 ]; then
+  echo "This script has is intended to be run on a Raspberry Pi, preferably with a clean install of Raspian"
+  echo "As part of the install process lighttpd, ffmpeg and imagemagick will be installed, the /var/www/html/ directory will be wiped and the front end code copied into it, and a cron job running once per minute during the day (or every two minutes at night) will be started to run 24 hours a day"
+  echo "If you are certain that you want to proceed then answer Y to continue, otherwise N or Ctrl-C to exit"
+else
+  installGood=0
+fi
 
-installGood=-1	# Using the values -1=false, 0=no install, 1=install
 while [ $installGood -eq -1 ]; do
   read installConfirm
   if [ $installConfirm == "y" ] || [ $installConfirm == "Y" ]; then
@@ -179,7 +204,7 @@ if [ $installGood -eq 1 ]; then
   getLongitude
   echo -e "$lat\n$lon">back-end/gps
 
-  echo "About to install the all sky camera. Press enter when ready..."
+  echo "About to update the RPi and install the all sky camera code. This step could take a while due to the updates. Press enter when ready..."
   read installCheck
   installs
   setup

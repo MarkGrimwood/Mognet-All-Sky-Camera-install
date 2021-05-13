@@ -1,0 +1,46 @@
+#!/bin/bash
+
+CURRENTDIRECTORY=$PWD
+INSTALLDIRECTORY="/home/pi/Mognet-All-Sky-Camera"
+
+installGood=-1	# Using the values -1=false, 0=no install, 1=install
+
+clear
+echo "This is the update script for Mognet's All Sky Camera"
+echo "====================================================="
+echo "This script updates the code for the all sky camera. It will preserve the current and historical images and videos captured, but will overwrite all the driving code"
+echo "Note: Any customisations that have been made to the code since the install will be lost!"
+echo "If you are certain that you want to proceed then answer Y to continue, otherwise N or Ctrl-C to exit"
+
+while [ $installGood -eq -1 ]; do
+  read installConfirm
+  if [ $installConfirm == "y" ] || [ $installConfirm == "Y" ]; then
+    installGood=1
+  elif [ $installConfirm == "n" ] || [ $installConfirm == "N" ]; then
+    installGood=0
+  else
+    echo "Please enter only Y or N"
+  fi
+done
+
+if [ $installGood -eq 1 ]; then
+  echo "Stopping the cron service"
+  sudo service cron stop
+
+  echo "Copying the back end code"
+  cp -rv $CURRENTDIRECTORY/back-end/* $INSTALLDIRECTORY/back-end/
+  cp -rv $CURRENTDIRECTORY/gpsupdate $INSTALLDIRECTORY/gpsupdate
+  sudo chmod 755 $INSTALLDIRECTORY/back-end/pics/newmovie.sh
+  sudo chmod 755 $INSTALLDIRECTORY/back-end/pics/capture.sh
+  sudo chmod 755 $INSTALLDIRECTORY/back-end/mgasc.sh
+  sudo chmod 755 $INSTALLDIRECTORY/back-end/dailyupdate.sh
+  sudo chmod 755 $INSTALLDIRECTORY/gpsupdate
+
+  echo "Copying the front end code"
+  sudo cp -rv $CURRENTDIRECTORY/front-end/* /var/www/html/
+  sudo chown nobody /var/www/html/{history,*.php,*.html,*.gif,*.css}
+
+  echo "Recalculating times and restarting the all sky camera"
+  cd "$INSTALLDIRECTORY/back-end/"
+  sudo ./mgasc.sh
+fi

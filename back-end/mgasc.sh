@@ -1,15 +1,27 @@
 #!/bin/bash
 
 # ****************************************************************************************************************************
-# 
+#
 # This is the main setup script for the all sky camera. It generates all the crontab items to trigger captures, etc
 #
 # ****************************************************************************************************************************
 
 HOME="/home/pi/Mognet-All-Sky-Camera/back-end"	# Working directory
 WEB="/var/www/html"
+NEWDAYMOVIE="newmovie.sh day"
+NEWNIGHTMOVIE="newmovie.sh night"
+CAPTUREDAY="capture.sh day"
+CAPTURENIGHT="capture.sh night"
+
+# Interval for raspistill to take shots.  Night time needs to be longer since raspistill needs longer at night to complete as
+# it can take raspistill up to 1 minute 15 seconds to process a ten second night time image
+shotD=1 # Daytime shot interval
+shotN=2 # Night time shot interval
 
 # *** S E T U P **********************************************************************
+
+THISSCRIPT=${0}
+
 # Get the latitude and longitude from the gps file. Values were set in the autodeploy
 arrGPS=($(cat gps))
 lat=${arrGPS[0]}
@@ -49,10 +61,6 @@ SSetVid=-00:00 # Offset advance or delay for the Video Day / Night switch.
 twiSet=-00:00 # Advance or delay when the camera switches from day to night.
 twiSetP=-00:09 # Camera switch time.  Needs to be at least 1 minute EARLIER than the Video switch time.
 twiSetVid=-00:12 # Offset advance or delay for the Video Day / Night switch.
-
-# Interval for raspistill to take shots.  Night time needs to be longer since raspistill needs longer at night to complete.
-shotD=1 # Daytime shot interval
-shotN=2 # Night time shot interval.  It can take raspistill up to 1 minute 15 seconds to process a ten second night time image
 
 # *** E N D   O F   S E T U P *************************************************************************
 
@@ -149,9 +157,9 @@ echo -e $AstroRiseReal"\n"$NauticalRiseReal"\n"$CivilRiseReal"\n"$SunRiseReal"\n
 echo -e $twilightRiseVid"\n"$twilightSetVid"\n"$CameraAM"\n"$CameraPM>>$HOME/daily
 
 sudo cp $HOME/gps "$WEB/"
-sudo chown nobody "$HOME/gps"
+sudo chown nobody "$WEB/gps"
 sudo cp $HOME/daily "$WEB/"
-sudo chown nobody "$HOME/daily"
+sudo chown nobody "$WEB/daily"
 
 # Write the crontab file
 echo "#* * * * *">$HOME/mgasccron
@@ -177,7 +185,7 @@ echo "#">>$HOME/mgasccron
 
 # Daily regeneration at noon
 echo "# Regeneration">>$HOME/mgasccron
-echo "0 12 * * * $HOME/mgasc">>$HOME/mgasccron
+echo "35 13 * * * $HOME/dailyupdate.sh">>$HOME/mgasccron
 echo "">>$HOME/mgasccron
 
 # Flag if we're dealing with polar day or night
@@ -239,8 +247,8 @@ if [ ${nightEndM:0:1} -eq "0" ]; then
   nightEndM=${nightEndM:1}
 fi
 
-echo "$dayStartM $dayStartH * * * $HOME/pics/newdaymovie.sh">>"$HOME/mgasccron"
-echo "$nightStartM $nightStartH * * * $HOME/pics/newnightmovie.sh">>"$HOME/mgasccron"
+echo "$dayStartM $dayStartH * * * $HOME/pics/$NEWDAYMOVIE">>"$HOME/mgasccron"
+echo "$nightStartM $nightStartH * * * $HOME/pics/$NEWNIGHTMOVIE">>"$HOME/mgasccron"
 
 # Adjust timings for shots - first the generic functions
 function adjustHourUp() {
@@ -409,18 +417,18 @@ else
   # Is our day standard or non-standard?
   if [ "$dayStartH" -lt "$dayEndH" ]; then
     # If the day start is definitely before the day end
-    standardRules $dayStartH $dayStartM $dayEndH $dayEndM $shotD "$HOME/pics/captureday.sh" $nightStartH $nightStartM $nightEndH $nightEndM $shotN "$HOME/pics/capturenight.sh"
+    standardRules $dayStartH $dayStartM $dayEndH $dayEndM $shotD "$HOME/pics/$CAPTUREDAY" $nightStartH $nightStartM $nightEndH $nightEndM $shotN "$HOME/pics/$CAPTURENIGHT"
   elif [ "$dayStartH" -eq "$dayEndH" ] && [ "$dayStartM" -lt "$dayEndM" ]; then
     # If the hour is the same but the day start minutes are before the day end (a very short day!)
-    standardRules $dayStartH $dayStartM $dayEndH $dayEndM $shotD "$HOME/pics/captureday.sh" $nightStartH $nightStartM $nightEndH $nightEndM $shotN "$HOME/pics/capturenight.sh"
+    standardRules $dayStartH $dayStartM $dayEndH $dayEndM $shotD "$HOME/pics/$CAPTUREDAY" $nightStartH $nightStartM $nightEndH $nightEndM $shotN "$HOME/pics/$CAPTURENIGHT"
   else
     # The non-standard rules are actually the standard rules applied the opposite way round
-    standardRules $nightStartH $nightStartM $nightEndH $nightEndM $shotN "$HOME/pics/capturenight.sh" $dayStartH $dayStartM $dayEndH $dayEndM $shotD "$HOME/pics/captureday.sh"
+    standardRules $nightStartH $nightStartM $nightEndH $nightEndM $shotN "$HOME/pics/$CAPTURENIGHT" $dayStartH $dayStartM $dayEndH $dayEndM $shotD "$HOME/pics/$CAPTUREDAY"
   fi
 fi
 
 
-## Display today's Sun rise and set times and the times when the camea switches modes and when the Day / Night video switching happens.
+## Display today's Sun rise and set times and the times when the camera switches modes and when the Day / Night video switching happens.
 # Write the same data to $HOME/daily_times.txt
 echo " ">$HOME/daily_times.txt
 echo "E V E N T                                      HH:MM OFFSET">>$HOME/daily_times.txt
@@ -453,10 +461,8 @@ cat "$HOME/daily_times.txt"
 
 # *******************************************************************************
 # This where the new cron file (mgasccron) gets sent to do its work.
-sudo service cron stop
-chmod 600 $HOME/mgasccron
-sudo rm /var/spool/cron/crontabs/root
-sudo cp $HOME/mgasccron /var/spool/cron/crontabs/root
-sudo chmod 600 /var/spool/cron/crontabs/root
-sudo service cron start
+sudo service cron stop   # Stop the cron job
+sudo crontab -r          # Remove the current crontab file
+sudo crontab "$HOME/mgasccron"
+sudo service cron start  # Start the cron job, which will pick up the changes
 # ** E N D ***********************************************************************
