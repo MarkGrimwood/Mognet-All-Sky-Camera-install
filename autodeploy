@@ -204,7 +204,7 @@ if [ $installGood -eq 1 ]; then
   getLongitude
   echo -e "$lat\n$lon">back-end/gps
 
-  echo "About to install the all sky camera code. Press enter when ready..."
+  echo "About to update the RPi and install the all sky camera code. This step could take a while due to the updates. Press enter when ready..."
   read installCheck
   installs
   setup
