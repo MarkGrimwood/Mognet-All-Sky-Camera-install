@@ -157,9 +157,9 @@ echo -e $AstroRiseReal"\n"$NauticalRiseReal"\n"$CivilRiseReal"\n"$SunRiseReal"\n
 echo -e $twilightRiseVid"\n"$twilightSetVid"\n"$CameraAM"\n"$CameraPM>>$HOME/daily
 
 sudo cp $HOME/gps "$WEB/"
-sudo chown nobody "$HOME/gps"
+sudo chown nobody "$WEB/gps"
 sudo cp $HOME/daily "$WEB/"
-sudo chown nobody "$HOME/daily"
+sudo chown nobody "$WEB/daily"
 
 # Write the crontab file
 echo "#* * * * *">$HOME/mgasccron
