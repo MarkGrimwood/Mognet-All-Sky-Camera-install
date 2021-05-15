@@ -6,7 +6,11 @@ The code sets up a cron job to capture an image once per minute during the day, 
 
 Using an RPi Zero has the advantage of being low cost, meaning that if it gets stolen or suffers a weather related failure, then financial loss is minimised
 
-# Parts
+Full documentation is available in the Wiki https://github.com/MarkGrimwood/Mognet-All-Sky-Camera-install/wiki
+
+# Quick Setup Guide
+
+## Parts
 
 * A Raspberry Pi Zero WH (or W) like this: https://thepihut.com/collections/raspberry-pi/products/raspberry-pi-zero-wh-with-pre-soldered-header
 * A Raspberry Pi V2 camera module. It doesn't matter if it has the IR filter or not https://thepihut.com/collections/raspberry-pi-camera/products/raspberry-pi-noir-camera-module
@@ -18,11 +22,11 @@ A CCTV type dome if fitting outside. They can also be used from indoors, but dou
 
 A 3D printer is useful for creating all the fittings
 
-# Before installation
+## Before installation
 
 You will need to know your latitude and longitude. An approximate location is fine as this information is only used for timings of sunrise, sunset etc. The values are entered separately in decimal format with the N/S and E/W indicators. Those values will be truncated to two decimal points, so a precise location of 52.202175N, 0.128179E will become 52.20N and 0.12E
 
-# Installation
+## Installation
 
 Initialise the memory card with a version of Raspbian. For the RPi Zero Raspbian Lite is probably the best version to go for
 Set up on the card for wifi and ssh
@@ -45,16 +49,3 @@ Now to get the code onto the RPi and install it, so type the following commands
 * ./autodeploy
 
 You will be prompted for your latitude and longitude, and then after that everything should automatic. The auto deploy script will also make sure that the updates are done to the RPi. Once complete (approx 10-15 minutes on a RPi Zero) the installer script will give the URL for viewing the captured images, etc and viewing is just through a normal web browser 
-
-# Oddities
-
-Occasionally odd things happen. I've seen half images sometimes which I haven't identified the cause of yet. They only occur in the live view and don't appear on the video or image history. And there are sometimes issues with displaying the videos where they are slow to download or a new version of the video gets copied over the existing one while a download is in progress and things get tangled. My background is mainframe assembler and Cobol and then automated testing. I'm still new to web design and coding so haven't delved into the intricacies of it yet.
-
-# The future
-
-There are a few bits that need to be sorted
-* Daily regeneration script to include RPi security update and bug fix check. I did have code there but seem to have lost it in one of the forced rebuilds.
-* Air temperature sensor code. Pete's original version had that as an option and I didn't get round to buying the necessary sensor, so I disabled the code for now. 
-* Revisit the timing setup script. I don't know how well it will work for locations close to the polar circles towards midsummer and midwinter, and for inside the polar circles at those times I haven't written anything yet. I think there may be a better way to do it than what I've done for this version
-* Updater script. So that when there's an update it just overwrite the script parts and preserve the history.
-* Refactoring common code. There are two pairs of scripts (captureday.sh/capturenight.sh and newdaymovie.sh/newnightmovie.sh) that share common code. These should really be amalgamated and parameterised to make maintenance easier.
