@@ -6,7 +6,7 @@ The code sets up a cron job to capture an image once per minute during the day, 
 
 Using an RPi Zero has the advantage of being low cost, meaning that if it gets stolen or suffers a weather related failure, then financial loss is minimised
 
-Full documentation is available in the Wiki https://github.com/MarkGrimwood/Mognet-All-Sky-Camera-install/wiki
+Full documentation is available in the Wiki https://github.com/MarkGrimwood/Mognet-All-Sky-Camera-install/wiki And I've started a discussion thread here https://stargazerslounge.com/topic/376932-another-all-sky-camera/
 
 # Quick Setup Guide
 
