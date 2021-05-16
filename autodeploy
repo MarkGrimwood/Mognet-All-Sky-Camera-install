@@ -1,14 +1,7 @@
 #!/bin/bash
 
 function installs() {
-  # Ensure we're up to date
-  sudo apt-get -y update
-  sudo apt-get -y upgrade
-  sudo apt-get clean
-  sudo apt-get autoclean
-  sudo apt-get autoremove
-
-  # Install the web server and enable it
+# Install the web server and enable it
   sudo apt-get -y install lighttpd php php-cgi php-gd
   sudo lighty-enable-mod fastcgi
   sudo lighty-enable-mod fastcgi-php
@@ -181,7 +174,7 @@ echo "====================================================="
 camera_check
 if [ $? -eq 1 ]; then
   echo "This script has is intended to be run on a Raspberry Pi, preferably with a clean install of Raspian"
-  echo "As part of the install process lighttpd, ffmpeg and imagemagick will be installed, the /var/www/html/ directory will be wiped and the front end code copied into it, and a cron job running once per minute during the day (or every two minutes at night) will be started to run 24 hours a day"
+  echo "As part of the install process lighttpd, ffmpeg and imagemagick will be installed, the /var/www/html/ directory will be wiped and the front end code copied into it, and a cron job running once per minute during the day and every two minutes at night will be started to run 24 hours a day"
   echo "If you are certain that you want to proceed then answer Y to continue, otherwise N or Ctrl-C to exit"
 else
   installGood=0
@@ -204,7 +197,7 @@ if [ $installGood -eq 1 ]; then
   getLongitude
   echo -e "$lat\n$lon">back-end/gps
 
-  echo "About to update the RPi and install the all sky camera code. This step could take a while due to the updates. Press enter when ready..."
+  echo "About to update the RPi and install the all sky camera code. This step will take a few minutes. Press enter when ready..."
   read installCheck
   installs
   setup
