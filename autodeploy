@@ -39,8 +39,8 @@ function setup() {
   # TODO - see about calling sunwait to determine day/night state
   cd $INSTALLDIRECTORY/back-end/pics/
   echo "Working in $PWD"
-  sudo chmod 755 newmovie.sh
-  sudo chmod 755 capture.sh
+  sudo chmod +x newmovie.sh
+  sudo chmod +x capture.sh
   sudo ./newmovie.sh day
   sudo ./newmovie.sh night
 
@@ -49,8 +49,8 @@ function setup() {
   # After deployment this will also be run daily at noon
   cd $INSTALLDIRECTORY/back-end/
   echo "Working in $PWD"
-  sudo chmod 755 mgasc.sh
-  sudo chmod 755 dailyupdate.sh
+  sudo chmod +x mgasc.sh
+  sudo chmod +x dailyupdate.sh
   sudo ./mgasc.sh
 }
 
