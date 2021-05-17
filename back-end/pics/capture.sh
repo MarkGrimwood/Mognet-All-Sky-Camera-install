@@ -54,17 +54,15 @@ then
   cp "$WEBCAMPD" "$WEBPATH/webcam.jpg"
   sudo chown nobody "$WEBPATH/webcam.jpg"
 
-  # Get the current list of frame(s) This should avoid dropped frames if this script is activated while an older one is still running
-  FILELIST=$(ls $FILEFILTER)
-
   # Set frame(s) as a new movie
-  ffmpeg -y -framerate 20 -pix_fmt yuv420p -pattern_type  glob -i "$FILELIST" -c:v libx264 "$ADDMOVIE"
+  ffmpeg -y -framerate 20 -pix_fmt yuv420p -pattern_type  glob -i "$WEBCAMPD" -c:v libx264 "$ADDMOVIE"
 
-  # Now we've done with the captured frames make the images immediately available in the night shot list along with thumbnails
-  for i in $FILELIST; do convert -resize 80x60 $i thumb$i; done
-  mv -f thumb*.jpg $WEBPATH/$PERIOD/
-  mv -f $FILELIST $WEBPATH/$PERIOD/
-
+  convert -resize 80x60 "$WORKPATH/$WEBCAMPD" "$WEBPATH/$PERIOD/thumb$WEBCAMPD"
+  sudo chown nobody "$WEBPATH/$PERIOD/thumb$WEBCAMPD"
+  
+  mv "$WORKPATH/$WEBCAMPD" "$WEBPATH/$PERIOD/$WEBCAMPD"
+  sudo chown nobody "$WEBPATH/$PERIOD/$WEBCAMPD"
+  
   # Concatenate the current and additional movies into a new one
   ffmpeg -y -f concat -safe 0 -i "$MOVIELIST" -c copy "$UPDATEDMOVIE"
 

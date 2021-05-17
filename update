@@ -30,11 +30,11 @@ if [ $installGood -eq 1 ]; then
   echo "Copying the back end code"
   cp -rv $CURRENTDIRECTORY/back-end/* $INSTALLDIRECTORY/back-end/
   cp -rv $CURRENTDIRECTORY/gpsupdate $INSTALLDIRECTORY/gpsupdate
-  sudo chmod 755 $INSTALLDIRECTORY/back-end/pics/newmovie.sh
-  sudo chmod 755 $INSTALLDIRECTORY/back-end/pics/capture.sh
-  sudo chmod 755 $INSTALLDIRECTORY/back-end/mgasc.sh
-  sudo chmod 755 $INSTALLDIRECTORY/back-end/dailyupdate.sh
-  sudo chmod 755 $INSTALLDIRECTORY/gpsupdate
+  sudo chmod +x $INSTALLDIRECTORY/back-end/pics/newmovie.sh
+  sudo chmod +x $INSTALLDIRECTORY/back-end/pics/capture.sh
+  sudo chmod +x $INSTALLDIRECTORY/back-end/mgasc.sh
+  sudo chmod +x $INSTALLDIRECTORY/back-end/dailyupdate.sh
+  sudo chmod +x $INSTALLDIRECTORY/gpsupdate
 
   echo "Copying the front end code"
   sudo cp -rv $CURRENTDIRECTORY/front-end/* /var/www/html/
