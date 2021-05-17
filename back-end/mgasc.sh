@@ -259,8 +259,8 @@ function adjustHourUp() {
   if [ $r -ge 60 ]; then
     h=$(( $h + 1 ))
   fi
-  if [ $h -lt 0 ]; then
-    h=$(( $h + 24 ))
+  if [ $h -ge 24 ]; then
+    h=$(( $h - 24 ))
   fi
   return $h
 }
@@ -283,8 +283,8 @@ function adjustHourDown() {
   if [ $r -lt 0 ]; then
     h=$(( $h - 1 ))
   fi
-  if [ $h -ge 24 ]; then
-    h=$(( $h - 24 ))
+  if [ $h -lt 0 ]; then
+    h=$(( $h + 24 ))
   fi
   return $h
 }
