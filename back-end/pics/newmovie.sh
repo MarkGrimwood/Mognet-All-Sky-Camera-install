@@ -80,8 +80,8 @@ cp "$WORKPATH/$WEBCAMPD" "$WORKPATH/$WEBCAMPD-B.jpg"
 cp "$WORKPATH/$WEBCAMPD" "$WORKPATH/$WEBCAMPD-C.jpg"
 cp "$WORKPATH/$WEBCAMPD" "$WORKPATH/$WEBCAMPD-D.jpg"
 
-# Make a new movie with this last capture
-ffmpeg -y -framerate 20 -pix_fmt yuv420p -pattern_type glob -i "$WORKPATH/$WEBCAMPD" -c:v libx264 "$WORKPATH/$THISMOVIE"
+# Make a new movie with these captures
+ffmpeg -y -framerate 20 -pix_fmt yuv420p -pattern_type glob -i "$WORKPATH/webcam$PERIOD*.jpg" -c:v libx264 "$WORKPATH/$THISMOVIE"
 
 # Copy for web display
 cp -f "$WORKPATH/$THISMOVIE" "$WEBPATH/$PERIOD/$THISMOVIE"
