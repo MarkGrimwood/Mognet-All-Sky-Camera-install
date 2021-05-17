@@ -27,7 +27,7 @@ fi
 
 CPU_TEMP_FULL=$(vcgencmd measure_temp)
 CPU_TEMP=${CPU_TEMP_FULL:5:${#CPU_TEMP_FULL}-7}${CPU_TEMP_FULL: -1}
-IMAGE_TEXT="$HUMANDATE : CPU $CPU_TEMP"
+IMAGE_TEXT="$HUMANDATE : CPU Temp $CPU_TEMP"
 
 # Get the remaining space on the memory card/disk and remove enough history to ensure at least 2G remains
 arrDf=($(df --output=avail /))
