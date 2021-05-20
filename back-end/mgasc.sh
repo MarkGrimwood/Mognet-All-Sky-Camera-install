@@ -185,7 +185,7 @@ echo "#">>$HOME/mgasccron
 
 # Daily regeneration at noon
 echo "# Regeneration">>$HOME/mgasccron
-echo "35 13 * * * $HOME/dailyupdate.sh">>$HOME/mgasccron
+echo "0 12 * * * $HOME/dailyupdate.sh">>$HOME/mgasccron
 echo "">>$HOME/mgasccron
 
 # Flag if we're dealing with polar day or night
