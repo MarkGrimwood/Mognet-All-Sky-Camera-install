@@ -16,7 +16,7 @@ $lon=trim(fgets($gpsfile));
 fclose($gpsfile);
 // ***************************************************************
 
-echo "<h1>Sun Times - Camera & Video Modes</font></h1>";
+echo "<h1>Sun Times - Camera & Video Modes</h1>";
 echo date('D d M Y')." GPS: $lat, $lon";
 
 // ***************************************************************
@@ -30,15 +30,15 @@ echo '
             <th>HH:MM</th>
         </tr>
         <tr>
-            <td class="tableitemleftalign">Astronomical Dawn</font></td>
-            <td>-18&#176;</font></td>
-            <td>N</font></td>
+            <td class="tableitemleftalign">Astronomical Dawn</td>
+            <td>-18&#176;</td>
+            <td>N</td>
             <td>'.$ADawn.'</td>
         </tr>
 
         <tr>
             <td class="tableitemleftalign">Nautical Dawn</td>
-            <td>-12</td>
+            <td>-12&#176;</td>
             <td>N</td>
             <td>'.$NDawn.'</td>
         </tr>
@@ -50,25 +50,25 @@ echo '
         </tr>
         <tr>
             <td class="tableitemleftalign">Civil Dawn</td>
-            <td>-06</td>
+            <td>-06&#176;</td>
             <td>D</td>
             <td>'.$CDawn.'</td>
         </tr>
         <tr>
             <td class="tableitemleftalign">Sunrise</td>
-            <td>0</td>
+            <td>0&#176;</td>
             <td>D</td>
             <td>'.$SRise.'</td>
         </tr>
         <tr>
             <td class="tableitemleftalign">Sunset</td>
-            <td>0</td>
+            <td>0&#176;</td>
             <td>D</td>
             <td>'.$SSet.'</td>
         </tr>
         <tr>
             <td class="tableitemleftalign">Civil Set</td>
-            <td>-06</td>
+            <td>-06&#176;</td>
             <td>N</td>
             <td>'.$CSet.'</td>
         </tr>
@@ -80,13 +80,13 @@ echo '
         </tr>
         <tr>
             <td class="tableitemleftalign">Nautical Set</td>
-            <td>-12</td>
+            <td>-12&#176;</td>
             <td>N</td>
             <td>'.$NSet.'</td>
         </tr>
         <tr>
             <td class="tableitemleftalign">Astronomical Set</td>
-            <td>-18</td>
+            <td>-18&#176;</td>
             <td>N</td>
             <td>'.$ASet.'</td>
         </tr>
@@ -104,9 +104,3 @@ print("/");
 print((substr($lon,-1)=="E") ? substr($lon,0,-1) : -substr($lon,0,-1));
 print("/");
 ?>" target='_blank'>Clear Outside forecast for your location</a><br>
-<!--
-<br>
-<a href="https://www.astrospheric.com/" target='_blank'>Astronomer&apos;s Weather</a><br>
-<a href="https://cdn.star.nesdis.noaa.gov//GOES16/ABI/SECTOR/EUS/GEOCOLOR/GOES16-EUS-GEOCOLOR-1000x1000.gif" target='_blank'>NOAA VIS Image (east coast of USA and Canada</a><br>
-<a href="https://cdn.star.nesdis.noaa.gov//GOES16/ABI/SECTOR/EUS/13/GOES16-EUS-13-1000x1000.gif" target='_blank'>NOAA IR Image (east coast of USA and Canada</a><br>
--->

@@ -14,9 +14,9 @@ echo "If you are certain that you want to proceed then answer Y to continue, oth
 
 while [ $installGood -eq -1 ]; do
   read installConfirm
-  if [ $installConfirm == "y" ] || [ $installConfirm == "Y" ]; then
+  if [ "$installConfirm" == "y" ] || [ "$installConfirm" == "Y" ]; then
     installGood=1
-  elif [ $installConfirm == "n" ] || [ $installConfirm == "N" ]; then
+  elif [ "$installConfirm" == "n" ] || [ "$installConfirm" == "N" ]; then
     installGood=0
   else
     echo "Please enter only Y or N"
@@ -30,6 +30,8 @@ if [ $installGood -eq 1 ]; then
   echo "Copying the back end code"
   cp -rv $CURRENTDIRECTORY/back-end/* $INSTALLDIRECTORY/back-end/
   cp -rv $CURRENTDIRECTORY/gpsupdate $INSTALLDIRECTORY/gpsupdate
+  cp -rv $CURRENTDIRECTORY/LICENSE $INSTALLDIRECTORY/LICENSE
+  cp -rv $CURRENTDIRECTORY/README.md $INSTALLDIRECTORY/README.md
   sudo chmod +x $INSTALLDIRECTORY/back-end/pics/newmovie.sh
   sudo chmod +x $INSTALLDIRECTORY/back-end/pics/capture.sh
   sudo chmod +x $INSTALLDIRECTORY/back-end/mgasc.sh

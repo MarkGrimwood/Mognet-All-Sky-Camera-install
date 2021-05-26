@@ -19,8 +19,17 @@ function setup() {
   if [ "$CURRENTDIRECTORY" != "$INSTALLDIRECTORY" ]; then
     echo "Cleaning execution directory $INSTALLDIRECTORY"
     [ -d $INSTALLDIRECTORY ] && rm -rf $INSTALLDIRECTORY
-    echo "Copying to execution directory"
-    cp -rv $CURRENTDIRECTORY $INSTALLDIRECTORY
+    echo "Copying the back end code"
+    mkdir -p $INSTALLDIRECTORY/back-end/
+    cp -rv $CURRENTDIRECTORY/back-end/* $INSTALLDIRECTORY/back-end/
+    cp -rv $CURRENTDIRECTORY/gpsupdate $INSTALLDIRECTORY/gpsupdate
+    cp -rv $CURRENTDIRECTORY/LICENSE $INSTALLDIRECTORY/LICENSE
+    cp -rv $CURRENTDIRECTORY/README.md $INSTALLDIRECTORY/README.md
+    sudo chmod +x $INSTALLDIRECTORY/back-end/pics/newmovie.sh
+    sudo chmod +x $INSTALLDIRECTORY/back-end/pics/capture.sh
+    sudo chmod +x $INSTALLDIRECTORY/back-end/mgasc.sh
+    sudo chmod +x $INSTALLDIRECTORY/back-end/dailyupdate.sh
+    sudo chmod +x $INSTALLDIRECTORY/gpsupdate
   fi
 
   ## Clean out the web directory and copy our stuff into it
@@ -39,8 +48,6 @@ function setup() {
   # TODO - see about calling sunwait to determine day/night state
   cd $INSTALLDIRECTORY/back-end/pics/
   echo "Working in $PWD"
-  sudo chmod +x newmovie.sh
-  sudo chmod +x capture.sh
   sudo ./newmovie.sh day
   sudo ./newmovie.sh night
 
@@ -49,8 +56,7 @@ function setup() {
   # After deployment this will also be run daily at noon
   cd $INSTALLDIRECTORY/back-end/
   echo "Working in $PWD"
-  sudo chmod +x mgasc.sh
-  sudo chmod +x dailyupdate.sh
+  echo -e "$lat\n$lon">gps
   sudo ./mgasc.sh
 }
 
@@ -182,9 +188,9 @@ fi
 
 while [ $installGood -eq -1 ]; do
   read installConfirm
-  if [ $installConfirm == "y" ] || [ $installConfirm == "Y" ]; then
+  if [ "$installConfirm" == "y" ] || [ "$installConfirm" == "Y" ]; then
     installGood=1
-  elif [ $installConfirm == "n" ] || [ $installConfirm == "N" ]; then
+  elif [ "$installConfirm" == "n" ] || [ "$installConfirm" == "N" ]; then
     installGood=0
   else
     echo "Please enter only Y or N"
@@ -195,9 +201,8 @@ if [ $installGood -eq 1 ]; then
   echo "The latitude and longitude of your camera location is required. This can be approximate as it's only used for the sunrise and sunset timings"
   getLatitude
   getLongitude
-  echo -e "$lat\n$lon">back-end/gps
 
-  echo "About to update the RPi and install the all sky camera code. This step will take a few minutes. Press enter when ready..."
+  echo "About to install the all sky camera code. This step will take a few minutes. Press enter when ready..."
   read installCheck
   installs
   setup
