@@ -47,7 +47,23 @@ while [ $remainingSpace -lt 2097152 ]; do
 done
 
 # Archive last day's files if they exist
-[ -d "$WEBPATH/$PERIOD" ] && mv "$WEBPATH/$PERIOD" "$WEBPATH/history/$DATESTAMP-$PERIOD"
+if [ -d "$WEBPATH/$PERIOD" ]; then
+  echo "$WEBPATH/$PERIOD exists"
+  FILECOUNT=$(ls $WEBPATH/$PERIOD | wc -l)
+  echo "FILECOUNT is $FILECOUNT"
+  if [ $FILECOUNT -gt 4 ]; then
+    # But only if there is more than just the base information
+    echo "Moving $WEBPATH/$PERIOD"
+    mv "$WEBPATH/$PERIOD" "$WEBPATH/history/$DATESTAMP-$PERIOD"
+  else
+    # Only the base entry is present, so remove ready for recreation
+    echo "Removing $WEBPATH/$PERIOD"
+    rm -r "$WEBPATH/$PERIOD"
+  fi
+fi
+
+# And start the new period
+echo "Creating $WEBPATH/$PERIOD"
 mkdir "$WEBPATH/$PERIOD"
 echo "start:$DATESTAMP">"$WEBPATH/$PERIOD/info"
 sudo chown nobody "$WEBPATH/$PERIOD"
@@ -56,6 +72,7 @@ sudo chown nobody "$WEBPATH/$PERIOD/info"
 # Create the daily file (should really be done with the movie creation)
 echo -e "file '"$WORKPATH"/"$THISMOVIE"'\n""file '"$WORKPATH"/"$ADDMOVIE"'\n">"$MOVIELIST"
 
+echo "Initial capture"
 if [ "$PERIOD" == "day" ]; then
   # Capture the initial day image
   raspistill -ISO auto -awb greyworld -n -ex auto -w 1440 -h 1080 -o "$STANDARDCAPTURE"
@@ -81,6 +98,7 @@ cp "$WORKPATH/$WEBCAMPD" "$WORKPATH/$WEBCAMPD-C.jpg"
 cp "$WORKPATH/$WEBCAMPD" "$WORKPATH/$WEBCAMPD-D.jpg"
 
 # Make a new movie with these captures
+echo "Creating movie"
 ffmpeg -y -framerate 20 -pix_fmt yuv420p -pattern_type glob -i "$WORKPATH/webcam$PERIOD*.jpg" -c:v libx264 "$WORKPATH/$THISMOVIE"
 
 # Copy for web display
