@@ -37,7 +37,7 @@ while [ $remainingSpace -lt 2097152 ]; do
   # Select the oldest item for removal
   arrDir=($(ls -rt $WEBPATH/history/))
   # Remove the files from the directory
-  sudo rm $WEBPATH/history/${arrDir[0]}/*
+  sudo rm -rf $WEBPATH/history/${arrDir[0]}/*
   # And then remove the directory
   sudo rmdir $WEBPATH/history/${arrDir[0]}/
 
