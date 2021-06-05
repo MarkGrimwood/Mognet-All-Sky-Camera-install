@@ -13,10 +13,9 @@ NEWNIGHTMOVIE="newmovie.sh night"
 CAPTUREDAY="capture.sh day"
 CAPTURENIGHT="capture.sh night"
 
-# Interval for raspistill to take shots.  Night time needs to be longer since raspistill needs longer at night to complete as
-# it can take raspistill up to 1 minute 15 seconds to process a ten second night time image
+# Interval for raspistill to take shots
 shotD=1 # Daytime shot interval
-shotN=2 # Night time shot interval
+shotN=1 # Night time shot interval
 
 # *** S E T U P **********************************************************************
 
