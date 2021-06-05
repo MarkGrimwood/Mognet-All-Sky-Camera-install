@@ -2,7 +2,7 @@
 
 This project was created as a minimum viable product for all sky camera software that would handle backend capture automatically and provide a front end to display the image along with videos and saved image history while also being lightweight enough to run on a Raspberry Pi Zero W without stress. It is based on a previous all sky camera by Pete https://github.com/rederikus/AllSky-Camera-Raspberry-Pi and also contains the SunWait executable from https://github.com/risacher/sunwait
 
-The code sets up a cron job to capture an image once per minute during the day, or every two minutes at night. Each image is date and timestamped, and appended to an Mpeg for the relevant period. The saved periods are archived until the memory card is almost full, at which point the oldest period is deleted. At noon every day the crontab file is regenerated for the changing sunrise and sunset times. 
+The code sets up a cron job to capture an image once per minute day and night. Each image is date and timestamped, and appended to an Mpeg for the relevant period. The saved periods are archived until the memory card is almost full, at which point the oldest period is deleted. At noon every day the crontab file is regenerated for the changing sunrise and sunset times. 
 
 Using an RPi Zero has the advantage of being low cost, meaning that if it gets stolen or suffers a weather related failure, then financial loss is minimised
 
