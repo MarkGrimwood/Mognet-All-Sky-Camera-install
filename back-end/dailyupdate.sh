@@ -7,4 +7,4 @@ sudo ./mgasc.sh
 sudo cat mgasccron
 
 cd pics/
-./spaceclear.sh
+./clearspace.sh
