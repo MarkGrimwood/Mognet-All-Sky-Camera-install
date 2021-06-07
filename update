@@ -34,6 +34,7 @@ if [ $installGood -eq 1 ]; then
   cp -rv $CURRENTDIRECTORY/README.md $INSTALLDIRECTORY/README.md
   sudo chmod +x $INSTALLDIRECTORY/back-end/pics/newmovie.sh
   sudo chmod +x $INSTALLDIRECTORY/back-end/pics/capture.sh
+  sudo chmod +x $INSTALLDIRECTORY/back-end/pics/clearspace.sh
   sudo chmod +x $INSTALLDIRECTORY/back-end/mgasc.sh
   sudo chmod +x $INSTALLDIRECTORY/back-end/dailyupdate.sh
   sudo chmod +x $INSTALLDIRECTORY/gpsupdate
