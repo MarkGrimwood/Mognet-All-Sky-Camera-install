@@ -14,11 +14,18 @@ echo "Remaining attempts: $attemptsCount"
 while [ $remainingSpace -lt 2097152 ] && [ $attemptsCount -gt 0 ]; do
   # Select the oldest item for removal
   arrDir=($(ls -rt $WEBPATH/history/))
-  # Remove the files from the directory
-  echo "Removing:$WEBPATH/history/${arrDir[0]}/"
-  sudo rm -rf $WEBPATH/history/${arrDir[0]}/
-  # And then remove the directory
-  sudo rmdir $WEBPATH/history/${arrDir[0]}/
+
+  # Ensure there are directories there that can be removed
+  if [ ${#arrDir[@]} -gt 0 ]; then
+    # Remove the files from the directory
+    echo "Removing:$WEBPATH/history/${arrDir[0]}/"
+    sudo rm -rf $WEBPATH/history/${arrDir[0]}/
+    # And then remove the directory
+    sudo rmdir $WEBPATH/history/${arrDir[0]}/
+  else
+    echo "No directories to remove"
+    attemptsCount=0
+  fi
 
   # Decrement the remaining attempts
   attemptsCount=$(( $attemptsCount - 1 ))
