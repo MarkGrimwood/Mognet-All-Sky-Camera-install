@@ -29,10 +29,6 @@ CPU_TEMP_FULL=$(vcgencmd measure_temp)
 CPU_TEMP=${CPU_TEMP_FULL:5:${#CPU_TEMP_FULL}-7}${CPU_TEMP_FULL: -1}
 IMAGE_TEXT="$HUMANDATE : CPU Temp $CPU_TEMP"
 
-# Make sure there is enough space on disk for the next capture period
-cd $WORKPATH
-./clearspace.sh
-
 # Archive last day's files if they exist
 if [ -d "$WEBPATH/$PERIOD" ]; then
   echo "$WEBPATH/$PERIOD exists"
@@ -49,6 +45,10 @@ if [ -d "$WEBPATH/$PERIOD" ]; then
   fi
 fi
 
+# Make sure there is enough space on disk for the next capture period
+cd $WORKPATH
+./clearspace.sh
+
 # And start the new period
 echo "Creating $WEBPATH/$PERIOD"
 mkdir "$WEBPATH/$PERIOD"
@@ -58,6 +58,9 @@ sudo chown nobody "$WEBPATH/$PERIOD/info"
 
 # Create the daily file (should really be done with the movie creation)
 echo -e "file '"$WORKPATH"/"$THISMOVIE"'\n""file '"$WORKPATH"/"$ADDMOVIE"'\n">"$MOVIELIST"
+
+# Make sure there are no old images hanging around before we start
+rm "$WORKPATH/*.jpg"
 
 echo "Initial capture"
 if [ "$PERIOD" == "day" ]; then
