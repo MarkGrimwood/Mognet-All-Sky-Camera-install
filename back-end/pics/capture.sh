@@ -9,7 +9,7 @@ WEBPATH="/var/www/html"
 DATESTAMP=$(date +'%s')
 HUMANDATE=$(date +'%c')
 
-STANDARDCAPTURE="/run/shm/webcam.jpg"
+STANDARDCAPTURE="$WORKPATH/webcam.jpg"
 
 # Which period of time are we handling? If it's not specified as day then we assume it's night. And set up everything related
 if [ "$PERIOD" == "day" ]; then
