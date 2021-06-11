@@ -8,7 +8,7 @@ fi
 
 WORKPATH="/home/pi/Mognet-All-Sky-Camera/back-end/pics"
 WEBPATH="/var/www/html"
-STANDARDCAPTURE="/run/shm/webcam.jpg"
+STANDARDCAPTURE="$WORKPATH/webcam.jpg"
 
 DATESTAMP=$(date +'%s')
 HUMANDATE=$(date +'%c')
