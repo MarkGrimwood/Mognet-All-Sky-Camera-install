@@ -64,11 +64,11 @@ rm "$WORKPATH/*.jpg"
 
 echo "Initial capture"
 if [ "$PERIOD" == "day" ]; then
-  # Capture the initial day image
-  raspistill -ISO auto -awb greyworld -n -ex auto -w 1440 -h 1080 -o "$STANDARDCAPTURE"
+  # Capture the day image
+  raspistill -ISO auto -awb greyworld --nopreview --exposure auto -w 1440 -h 1080 -o "$STANDARDCAPTURE"
 else
-  # Capture the initial night image
-  raspistill -ISO auto -awb greyworld -n --exposure off --stats -w 1440 -h 1080 -co 70 -ag 9.0 -dg 2.0 -ss 10000000 -o "$STANDARDCAPTURE"
+  # Capture the night image. Although set to 10 seconds it takes closer to 20 on the Pi Zero
+  raspistill -ISO auto -awb greyworld --nopreview --exposure off --stats -w 1440 -h 1080 --contrast 20 -ag 12.0 -dg 2.0 -ss 10000000 -o "$STANDARDCAPTURE"
 fi
 
 # Stamp the image with the date and time and put it into the web day directory along with the thumbnail
