@@ -22,18 +22,18 @@ while [ $remainingSpace -lt 2097152 ] && [ $attemptsCount -gt 0 ]; do
     sudo rm -rf $WEBPATH/history/${arrDir[0]}/
     # And then remove the directory
     sudo rmdir $WEBPATH/history/${arrDir[0]}/
+
+    # Decrement the remaining attempts
+    attemptsCount=$(( $attemptsCount - 1 ))
+
+    arrDf=($(df --output=avail /))
+    remainingSpace=${arrDf[1]}
+    echo "Remaining space is now:'$remainingSpace'"
+    echo "Remaining attempts (if not completed): $attemptsCount"
   else
     echo "No directories to remove"
     attemptsCount=0
   fi
-
-  # Decrement the remaining attempts
-  attemptsCount=$(( $attemptsCount - 1 ))
-
-  arrDf=($(df --output=avail /))
-  remainingSpace=${arrDf[1]}
-  echo "Remaining space is now:'$remainingSpace'"
-  echo "Remaining attempts (if not completed): $attemptsCount"
 done
 
 df -h
