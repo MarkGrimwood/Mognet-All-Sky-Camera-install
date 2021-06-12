@@ -14,7 +14,7 @@ Full documentation is available in the Wiki https://github.com/MarkGrimwood/Mogn
 
 * A Raspberry Pi Zero WH (or W) like this: https://thepihut.com/collections/raspberry-pi/products/raspberry-pi-zero-wh-with-pre-soldered-header
 * A Raspberry Pi V2 camera module. It doesn't matter if it has the IR filter or not https://thepihut.com/collections/raspberry-pi-camera/products/raspberry-pi-noir-camera-module
-* A suitable wide angle lens e.g. https://thepihut.com/collections/raspberry-pi-camera-lenses/products/m12-lens-180-degree-fisheye-1-2-5-optical-format-1-7mm-focal-length
+* A suitable wide angle lens. I'm using https://thepihut.com/collections/raspberry-pi-camera-lenses/products/magnetic-fisheye-lens and a 3D printed case to hold it
 * A power supply for the Pi
 * A memory card. This needs to be a fast transfer one suitable for video or CCTV capture and ideally 16 or 32Gb in size. My 64Gb card currently holds seven weeks worth of captures!
 
