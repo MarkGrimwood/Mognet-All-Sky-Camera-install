@@ -9,7 +9,7 @@ WEBPATH="/var/www/html"
 DATESTAMP=$(date +'%s')
 HUMANDATE=$(date +'%c')
 
-STANDARDCAPTURE="/run/shm/webcam.jpg"
+STANDARDCAPTURE="$WORKPATH/webcam.jpg"
 
 # Which period of time are we handling? If it's not specified as day then we assume it's night. And set up everything related
 if [ "$PERIOD" == "day" ]; then
@@ -43,10 +43,10 @@ then
 
   if [ "$PERIOD" == "day" ]; then
     # Capture the day image
-    raspistill -ISO auto -awb greyworld -n -ex auto -w 1440 -h 1080 -o "$STANDARDCAPTURE"
+    raspistill -ISO auto -awb greyworld --nopreview --exposure auto -w 1440 -h 1080 -o "$STANDARDCAPTURE"
   else
-    # Capture the night image. Although set to 10 seconds (I think), it takes 75 seconds on a Pi Zero
-    raspistill -ISO auto -awb greyworld -n --exposure off --stats -w 1440 -h 1080 -co 70 -ag 9.0 -dg 2.0 -ss 10000000 -o "$STANDARDCAPTURE"
+    # Capture the night image. Although set to 10 seconds it takes closer to 20 on the Pi Zero
+    raspistill -ISO auto -awb greyworld --nopreview --exposure off --stats -w 1440 -h 1080 --contrast 20 -ag 12.0 -dg 2.0 -ss 10000000 -o "$STANDARDCAPTURE"
   fi
 
   # Add date and time stamp

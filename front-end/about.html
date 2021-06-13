@@ -10,7 +10,7 @@
 Raspberry Pi based all sky camera software by Mark Grimwood (<a href='https://stargazerslounge.com/profile/52903-mognet/'>Mognet</a> on <a href='https://stargazerslounge.com/'>Stargazer's Lounge</a>). 
 Based on <a href='https://github.com/rederikus/AllSky-Camera-Raspberry-Pi'>Pete's all sky camera</a> (<a href='https://stargazerslounge.com/topic/353678-raspberry-pi-allsky-camera/'>discussion thread on SGL</a>)<br>
 <br>
-Images are taken every minute during the daytime and every two minutes at night, and each image is added to a video for that period. The images are date and time stamped, and the stamps also appear in the videos<br>
+Images are taken every minute day and night, and each image is added to a video for that period. The images are date and time stamped, and the stamps also appear in the videos<br>
 <br>
 A history of videos and images is preserved until space on the memory card runs low, after which the oldest period(s) will be deleted to ensure enough space for the next set of captures. Clean up code runs when available space drops below 2Gb at the start of a capture period<br>
 <br>
@@ -21,7 +21,15 @@ Day and night camera modes are automatically catered for and switching occurs at
 This project lives on GitHub <a href='https://github.com/MarkGrimwood/Mognet-All-Sky-Camera-install'>https://github.com/MarkGrimwood/Mognet-All-Sky-Camera-install</a>
 <br><br><hr>
 <h2>Version History</h2>
-  <h3>v1.3</h3>
+  <h3>v1.2.2</h3>
+  <ul>
+    <li>Move history clearance to a common script</li>
+    <li>Fix potential infinite loop in history clearance</li>
+    <li>Fix removal of empty history directory when using memory cards under the minimum required size</li>
+    <li>Remove surplus .jpg files from pics/ directory before creating a new period movie</li>
+    <li>Improve image capture at night</li>
+  </ul>
+  <h3>v1.2.1</h3>
   <ul>
     <li>Change nighttime captures so that capture can happen once per minute with the right cameras instead of every two minutes</li>
   </ul>
