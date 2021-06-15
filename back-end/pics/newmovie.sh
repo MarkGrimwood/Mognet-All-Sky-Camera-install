@@ -73,7 +73,7 @@ fi
 
 # Stamp the image with the date and time and put it into the web day directory along with the thumbnail
 convert "$STANDARDCAPTURE" -gravity North -pointsize 30 -fill black -draw "text 2,2 '$IMAGE_TEXT'" -fill white -draw "text 0,0 '$IMAGE_TEXT'" "$WORKPATH/$WEBCAMPD.jpg"
-convert -resize 80x60 "$WORKPATH/$WEBCAMPD.jpg" "$WEBPATH/$PERIOD/thumb$WEBCAMPD"
+convert -resize 80x60 "$WORKPATH/$WEBCAMPD.jpg" "$WEBPATH/$PERIOD/thumb$WEBCAMPD.jpg"
 sudo chown nobody "$WORKPATH/$WEBCAMPD.jpg"
 sudo chown nobody "$WEBPATH/$PERIOD/thumb$WEBCAMPD"
 
