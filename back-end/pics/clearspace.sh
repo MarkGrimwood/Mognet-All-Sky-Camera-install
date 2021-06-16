@@ -5,7 +5,7 @@ WEBPATH="/var/www/html"
 # Get the remaining space on the memory card/disk and remove enough history to ensure at least 2G remains
 arrDf=($(df --output=avail /))
 remainingSpace=${arrDf[1]}
-echo "\nRemaining space:$remainingSpace"
+echo -e "\nRemaining space:$remainingSpace"
 
 attemptsCount=5
 echo "Remaining attempts: $attemptsCount"
