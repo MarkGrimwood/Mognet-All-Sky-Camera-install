@@ -97,4 +97,4 @@ sudo chown nobody "$WEBPATH/$PERIOD/$THISMOVIE"
 
 # Clean up ready for next time
 mv -f "$WORKPATH/$WEBCAMPD.jpg" "$WEBPATH/$PERIOD/"
-rm -f "$WORKPATH/webcam$PERIOD*.jpg"
+rm -f "$WORKPATH/$WEBCAMPD-*.jpg"
