@@ -10,16 +10,6 @@ Full documentation is available in the Wiki https://github.com/MarkGrimwood/Mogn
 
 # Quick Setup Guide
 
-## Parts
-
-* A Raspberry Pi Zero WH (or W) like this: https://thepihut.com/collections/raspberry-pi/products/raspberry-pi-zero-wh-with-pre-soldered-header
-* A Raspberry Pi V2 camera module. It doesn't matter if it has the IR filter or not https://thepihut.com/collections/raspberry-pi-camera/products/raspberry-pi-noir-camera-module
-* A suitable wide angle lens. I'm using https://thepihut.com/collections/raspberry-pi-camera-lenses/products/magnetic-fisheye-lens and a 3D printed case to hold it
-* A power supply for the Pi
-* A memory card. This needs to be a fast transfer one suitable for video or CCTV capture and ideally 16 or 32Gb in size. My 64Gb card currently holds seven weeks worth of captures!
-
-A CCTV type dome if fitting outside. They can also be used from indoors, but double glazing and household lighting can cause internal reflections. There are plenty of examples for building external camera enclosures already, so I won't add to them
-
 ## Before installation
 
 You will need to know your latitude and longitude. An approximate location is fine as this information is only used for timings of sunrise, sunset etc. The values are entered separately in decimal format with the N/S and E/W indicators. Those values will be truncated to two decimal points, so a precise location of 52.202175N, 0.128179E will become 52.20N and 0.12E
