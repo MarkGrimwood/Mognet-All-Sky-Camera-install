@@ -17,12 +17,12 @@ if [ "$PERIOD" == "day" ]; then
   THISMOVIE="movieday.mp4"
   ADDMOVIE="movieaddday.mp4"
   MOVIELIST="daylist.txt"
-  WEBCAMPD="webcamday$DATESTAMP.jpg"
+  WEBCAMPD="webcamday$DATESTAMP"
 else
   THISMOVIE="movienight.mp4"
   ADDMOVIE="movieaddnight.mp4"
   MOVIELIST="nightlist.txt"
-  WEBCAMPD="webcamnight$DATESTAMP.jpg"
+  WEBCAMPD="webcamnight$DATESTAMP"
 fi
 
 CPU_TEMP_FULL=$(vcgencmd measure_temp)
@@ -60,7 +60,7 @@ sudo chown nobody "$WEBPATH/$PERIOD/info"
 echo -e "file '"$WORKPATH"/"$THISMOVIE"'\n""file '"$WORKPATH"/"$ADDMOVIE"'\n">"$MOVIELIST"
 
 # Make sure there are no old images hanging around before we start
-rm "$WORKPATH/*.jpg"
+sudo rm -f "$WORKPATH/webcam*.jpg"
 
 echo "Initial capture"
 if [ "$PERIOD" == "day" ]; then
@@ -72,20 +72,20 @@ else
 fi
 
 # Stamp the image with the date and time and put it into the web day directory along with the thumbnail
-convert "$STANDARDCAPTURE" -gravity North -pointsize 30 -fill black -draw "text 2,2 '$IMAGE_TEXT'" -fill white -draw "text 0,0 '$IMAGE_TEXT'" "$WORKPATH/$WEBCAMPD"
-convert -resize 80x60 "$WORKPATH/$WEBCAMPD" "$WEBPATH/$PERIOD/thumb$WEBCAMPD"
-sudo chown nobody "$WORKPATH/$WEBCAMPD"
-sudo chown nobody "$WEBPATH/$PERIOD/thumb$WEBCAMPD"
+convert "$STANDARDCAPTURE" -gravity North -pointsize 30 -fill black -draw "text 2,2 '$IMAGE_TEXT'" -fill white -draw "text 0,0 '$IMAGE_TEXT'" "$WORKPATH/$WEBCAMPD.jpg"
+convert -resize 80x60 "$WORKPATH/$WEBCAMPD.jpg" "$WEBPATH/$PERIOD/thumb$WEBCAMPD.jpg"
+sudo chown nobody "$WORKPATH/$WEBCAMPD.jpg"
+sudo chown nobody "$WEBPATH/$PERIOD/thumb$WEBCAMPD.jpg"
 
 # Copy the captured image for web display too
-cp -f "$WORKPATH/$WEBCAMPD" "$WEBPATH/webcam.jpg"
+cp -f "$WORKPATH/$WEBCAMPD.jpg" "$WEBPATH/webcam.jpg"
 sudo chown nobody "$WEBPATH/webcam.jpg"
 
 # A new movie seems to need multiple frames
-cp "$WORKPATH/$WEBCAMPD" "$WORKPATH/$WEBCAMPD-A.jpg"
-cp "$WORKPATH/$WEBCAMPD" "$WORKPATH/$WEBCAMPD-B.jpg"
-cp "$WORKPATH/$WEBCAMPD" "$WORKPATH/$WEBCAMPD-C.jpg"
-cp "$WORKPATH/$WEBCAMPD" "$WORKPATH/$WEBCAMPD-D.jpg"
+cp "$WORKPATH/$WEBCAMPD.jpg" "$WORKPATH/$WEBCAMPD-A.jpg"
+cp "$WORKPATH/$WEBCAMPD.jpg" "$WORKPATH/$WEBCAMPD-B.jpg"
+cp "$WORKPATH/$WEBCAMPD.jpg" "$WORKPATH/$WEBCAMPD-C.jpg"
+cp "$WORKPATH/$WEBCAMPD.jpg" "$WORKPATH/$WEBCAMPD-D.jpg"
 
 # Make a new movie with these captures
 echo "Creating movie"
@@ -96,5 +96,8 @@ cp -f "$WORKPATH/$THISMOVIE" "$WEBPATH/$PERIOD/$THISMOVIE"
 sudo chown nobody "$WEBPATH/$PERIOD/$THISMOVIE"
 
 # Clean up ready for next time
-mv -f "$WORKPATH/$WEBCAMPD" "$WEBPATH/$PERIOD/"
-rm "$WORKPATH/*.jpg"
+mv -f "$WORKPATH/$WEBCAMPD.jpg" "$WEBPATH/$PERIOD/"
+rm -f "$WORKPATH/$WEBCAMPD-A.jpg"
+rm -f "$WORKPATH/$WEBCAMPD-B.jpg"
+rm -f "$WORKPATH/$WEBCAMPD-C.jpg"
+rm -f "$WORKPATH/$WEBCAMPD-D.jpg"

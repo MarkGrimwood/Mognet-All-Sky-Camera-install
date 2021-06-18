@@ -4,21 +4,9 @@ This project was created as a minimum viable product for all sky camera software
 
 The code sets up a cron job to capture an image once per minute day and night. Each image is date and timestamped, and appended to an Mpeg for the relevant period. The saved periods are archived until the memory card is almost full, at which point the oldest period is deleted. At noon every day the crontab file is regenerated for the changing sunrise and sunset times. 
 
-Using an RPi Zero has the advantage of being low cost, meaning that if it gets stolen or suffers a weather related failure, then financial loss is minimised
-
 Full documentation is available in the Wiki https://github.com/MarkGrimwood/Mognet-All-Sky-Camera-install/wiki And I've started a discussion thread here https://stargazerslounge.com/topic/376932-another-all-sky-camera/
 
 # Quick Setup Guide
-
-## Parts
-
-* A Raspberry Pi Zero WH (or W) like this: https://thepihut.com/collections/raspberry-pi/products/raspberry-pi-zero-wh-with-pre-soldered-header
-* A Raspberry Pi V2 camera module. It doesn't matter if it has the IR filter or not https://thepihut.com/collections/raspberry-pi-camera/products/raspberry-pi-noir-camera-module
-* A suitable wide angle lens. I'm using https://thepihut.com/collections/raspberry-pi-camera-lenses/products/magnetic-fisheye-lens and a 3D printed case to hold it
-* A power supply for the Pi
-* A memory card. This needs to be a fast transfer one suitable for video or CCTV capture and ideally 16 or 32Gb in size. My 64Gb card currently holds seven weeks worth of captures!
-
-A CCTV type dome if fitting outside. They can also be used from indoors, but double glazing and household lighting can cause internal reflections. There are plenty of examples for building external camera enclosures already, so I won't add to them
 
 ## Before installation
 
