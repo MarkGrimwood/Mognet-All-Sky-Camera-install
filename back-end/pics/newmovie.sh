@@ -30,12 +30,14 @@ CPU_TEMP=${CPU_TEMP_FULL:5:${#CPU_TEMP_FULL}-7}${CPU_TEMP_FULL: -1}
 IMAGE_TEXT="$HUMANDATE : CPU Temp $CPU_TEMP"
 
 # Wait until the capture script has finished. And don't clash with another instance of this script
-COUNTCAPTURE=$(ps -ef | grep capture | grep bash | wc -l)
-COUNTNEW=$(ps -ef | grep newmovie | grep bash | wc -l)
 while [ true ]; do
+  COUNTCAPTURE=$(ps -ef | grep capture | grep bash | wc -l)
+  COUNTNEW=$(ps -ef | grep newmovie | grep bash | wc -l)
+
   if [ "$COUNTCAPTURE" -eq 0 ] && [ "$COUNTNEW" -le 1 ]
     break;
   fi
+
   sleep 1s
 done
 
