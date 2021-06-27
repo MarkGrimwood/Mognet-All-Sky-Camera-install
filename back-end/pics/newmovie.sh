@@ -34,12 +34,15 @@ while [ true ]; do
   COUNTCAPTURE=$(ps -ef | grep capture | grep bash | wc -l)
   COUNTNEW=$(ps -ef | grep newmovie | grep bash | wc -l)
 
-  if [ "$COUNTCAPTURE" -eq 0 ] && [ "$COUNTNEW" -le 1 ]
-    break;
+  echo "capture: $COUNTCAPTURE newmovie: $COUNTNEW"
+
+  if [ "$COUNTCAPTURE" -eq 0 ] && [ "$COUNTNEW" -le 2 ]; then
+    break
   fi
 
   sleep 1s
 done
+echo "Working"
 
 # Archive last day's files if they exist
 if [ -d "$WEBPATH/$PERIOD" ]; then
