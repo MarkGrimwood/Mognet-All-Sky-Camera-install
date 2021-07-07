@@ -29,6 +29,21 @@ CPU_TEMP_FULL=$(vcgencmd measure_temp)
 CPU_TEMP=${CPU_TEMP_FULL:5:${#CPU_TEMP_FULL}-7}${CPU_TEMP_FULL: -1}
 IMAGE_TEXT="$HUMANDATE : CPU Temp $CPU_TEMP"
 
+# Wait until the capture script has finished. And don't clash with another instance of this script
+while [ true ]; do
+  COUNTCAPTURE=$(ps -ef | grep capture | grep bash | wc -l)
+  COUNTNEW=$(ps -ef | grep newmovie | grep bash | wc -l)
+
+  echo "capture: $COUNTCAPTURE newmovie: $COUNTNEW"
+
+  if [ "$COUNTCAPTURE" -eq 0 ] && [ "$COUNTNEW" -le 2 ]; then
+    break
+  fi
+
+  sleep 1s
+done
+echo "Working"
+
 # Archive last day's files if they exist
 if [ -d "$WEBPATH/$PERIOD" ]; then
   echo "$WEBPATH/$PERIOD exists"
@@ -86,6 +101,10 @@ cp "$WORKPATH/$WEBCAMPD.jpg" "$WORKPATH/$WEBCAMPD-A.jpg"
 cp "$WORKPATH/$WEBCAMPD.jpg" "$WORKPATH/$WEBCAMPD-B.jpg"
 cp "$WORKPATH/$WEBCAMPD.jpg" "$WORKPATH/$WEBCAMPD-C.jpg"
 cp "$WORKPATH/$WEBCAMPD.jpg" "$WORKPATH/$WEBCAMPD-D.jpg"
+
+# Remove the old movie
+echo "Removing old movie"
+sudo rm -f $WORKPATH/$THISMOVIE
 
 # Make a new movie with these captures
 echo "Creating movie"
