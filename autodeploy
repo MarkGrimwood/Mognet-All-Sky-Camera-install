@@ -178,6 +178,7 @@ installGood=-1	# Using the values -1=false, 0=no install, 1=install
 clear
 echo "Welcome to the setup stage of Mognet's All Sky Camera"
 echo "====================================================="
+echo -e "\nVersion 1.2.5\n"
 camera_check
 if [ $? -eq 1 ]; then
   echo "This script has is intended to be run on a Raspberry Pi, preferably with a clean install of Raspian"

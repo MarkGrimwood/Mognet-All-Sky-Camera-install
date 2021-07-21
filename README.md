@@ -33,5 +33,54 @@ Now to get the code onto the RPi and install it, so type the following commands
 * cd Mognet-All-Sky-Camera-install-main/
 * chmod 755 autodeploy
 * ./autodeploy
-
+ 
 You will be prompted for your latitude and longitude, and then after that everything should automatic. Once complete the installer script will give the URL for viewing the captured images, etc and viewing is just through a normal web browser 
+
+The install directory and zip file can now be removed:
+* cd ~/
+* rm -r Mognet-All-Sky-Camera-install-main/
+* rm main.zip
+
+# Version History
+
+## v1.2.5 - 21st July 2021
+
+* Minor update to add version numbers to autodeploy and install scripts, version history in README.md and add cleanup after install instructions
+
+## v1.2.4
+
+* Fix reliability issue on creating new movies when system is running slow
+
+## v1.2.3
+
+* Fix jpg naming and clearance defect introduced in v.1.2.2
+
+## v1.2.2
+
+* Move history clearance to a common script
+* Fix potential infinite loop in history clearance
+* Fix removal of empty history directory when using memory cards under the minimum required size
+* Remove surplus .jpg files from pics/ directory before creating a new period movie
+* Improve image capture at night
+
+## v1.2.1
+
+* Change nighttime captures so that capture can happen once per minute with the right cameras instead of every two minutes
+
+## v1.2
+
+* Fix history creation where an unused period containing only the initial files was being archived in the history section
+* Fix minor defect in autodeploy and update that would display an error if enter was pressed with a blank entry instead of a response
+* Change autodeploy to only copy the necessary files
+* Change autodeploy so that the gps file is created in the execution directory
+* Change update to copy LICENSE and README.md too
+* Add a link back to the GitHub page and a this version history
+* Tidy up on sun times page
+
+## v1.1
+
+* Various bug fixes. Details not noted at the time as before versioning was added
+
+## v1.0
+
+* Initial public release 
