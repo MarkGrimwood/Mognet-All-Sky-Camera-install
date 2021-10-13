@@ -75,7 +75,10 @@ sudo chown nobody "$WEBPATH/$PERIOD/info"
 echo -e "file '"$WORKPATH"/"$THISMOVIE"'\n""file '"$WORKPATH"/"$ADDMOVIE"'\n">"$MOVIELIST"
 
 # Make sure there are no old images hanging around before we start
-sudo rm -f "$WORKPATH/webcam*.jpg"
+for ITEM in $(ls $WORKPATH/webcam*.jpg)
+do
+  sudo rm "$ITEM"
+done
 
 echo "Initial capture"
 if [ "$PERIOD" == "day" ]; then
