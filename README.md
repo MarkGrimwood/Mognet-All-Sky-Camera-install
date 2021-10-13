@@ -43,6 +43,10 @@ The install directory and zip file can now be removed:
 
 # Version History
 
+## v1.2.6 - 13th October 2021
+
+* Fix minor bug in new movie file clearance
+
 ## v1.2.5 - 21st July 2021
 
 * Minor update to add version numbers to autodeploy and install scripts, version history in README.md and add cleanup after install instructions
