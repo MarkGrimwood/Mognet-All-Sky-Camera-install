@@ -48,7 +48,7 @@ then
  else
     # Capture the night image. Although set to 10 seconds it takes closer to 20 on the Pi Zero
 #    raspistill -ISO auto -awb greyworld --nopreview --exposure off --stats -w 1440 -h 1080 --contrast 20 -ag 12.0 -dg 2.0 -ss 10000000 -o "$STANDARDCAPTURE"
-    libcamera-still --autofocus-mode manual --lens-position 0.0 --nopreview --exposure normal --width 1440 --height 1080 --contrast 20 --gain 20.0 --shutter 10000000 --awbgains 1.1,2.8 --immediate -o "$STANDARDCAPTURE"    libcamera-still --autofocus-mode manual --lens-position 0.0 --nopreview --exposure normal --width 1440 --height 1080 --contrast 20 --gain 20.0 --shutter 10000000 --awbgains 1.1,2.8 --immediate -o "$STANDARDCAPTURE"
+    libcamera-still --autofocus-mode manual --lens-position 0.0 --nopreview --exposure normal --width 1440 --height 1080 --contrast 20 --gain 20.0 --shutter 10000000 --awbgains 1.1,2.8 --immediate -o "$STANDARDCAPTURE"
   fi
 
   # Add date and time stamp
