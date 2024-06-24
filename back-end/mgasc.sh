@@ -8,8 +8,8 @@
 
 HOME="/home/pi/Mognet-All-Sky-Camera/back-end"	# Working directory
 WEB="/var/www/html"
-NEWDAYMOVIE="newmovie.sh day"
-NEWNIGHTMOVIE="newmovie.sh night"
+NEWDAYMOVIE="newmovie.sh day>daymoviestart.log"
+NEWNIGHTMOVIE="newmovie.sh night>nightmoviestart.log"
 CAPTUREDAY="capture.sh day"
 CAPTURENIGHT="capture.sh night"
 
