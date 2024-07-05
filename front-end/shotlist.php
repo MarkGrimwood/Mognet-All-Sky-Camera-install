@@ -24,7 +24,8 @@ if ($period == "history") {
 ?>
 <html>
   <head>
-    <meta charset="UTF-8"><!-- name="viewport" content="width=device-width, initial-scale=1.0"-->
+    <meta charset="UTF-8">
+    <name="viewport" content="width=device-width, initial-scale=1.0">
 <?php print("<title>".$displaySource." Shot List</title>"); ?>
     <link rel="stylesheet" href="mgasc.css" type="text/css">
   </head>
@@ -51,39 +52,15 @@ natsort($fileList);
 print(count($fileList)." images were taken during the $displaySource<br><br>");
 
 if (count($fileList) > 0) {
-$showColumns = 3;
-?>
-  <table class='shotlist'>
-<?php
-  for ($tableColumn = 0; $tableColumn < $showColumns; $tableColumn++) {
-?>
-    <th>File name</th>
-    <th>Time</th>
-    <th>Image</th>
-<?php
-  }
-
-  $tableColumn = 0;
+  print("<section>");
   foreach($fileList as $fileItem) {
-    if ($tableColumn % $showColumns== 0) {
-      print("<tr>");
-    }
-
     $captureDate = date("H:i", substr($fileItem, strlen("webcam".$displaySource), 10));
-    print("<td>");
-    print("<a href='imagedisplay.php?period=$period&source=$source&image=".$fileItem."'>$fileItem</a>");
-    print("</td><td>");
-    print($captureDate);
-    print("</td><td>");
-    print("<a href='imagedisplay.php?period=$period&source=$source&image=$fileItem' title='$captureDate'><img src='$htmlPath/thumb$fileItem' width='80' height='60'></a>");
-    print("</td>");
-
-    if ($tableColumn % $showColumns == ($showColumns - 1)) {
-      print("</tr>");
-    }
-    $tableColumn++;
+    print("<div class='shotlist'>");
+    print("<p class='shotlisttext'>".$captureDate."</p>");
+    print("<a href='imagedisplay.php?period=$period&source=$source&image=$fileItem' title='$captureDate'><img class='shotlistimage' src='$htmlPath/thumb$fileItem' width='80' height='60'></a>");
+    print("</div>");
   }
-  print("</table>");
+  print("</section");
 }
 ?>
 
