@@ -54,7 +54,12 @@ print(count($fileList)." images were taken during the $displaySource<br><br>");
 if (count($fileList) > 0) {
   print("<section>");
   foreach($fileList as $fileItem) {
-    $captureDate = date("H:i", substr($fileItem, strlen("webcam".$displaySource), 10));
+    if (str_contains($fileItem, "-")) {
+      $captureDate = substr($fileItem, strlen("webcam".$displaySource) + 11, 4);
+      $captureDate = substr($captureDate, 0, 2).":".substr($captureDate, 2,2);
+    } else {
+      $captureDate = date("H:i", substr($fileItem, strlen("webcam".$displaySource), 10));
+    }
     print("<div class='shotlist'>");
     print("<p class='shotlisttext'>".$captureDate."</p>");
     print("<a href='imagedisplay.php?period=$period&source=$source&image=$fileItem' title='$captureDate'><img class='shotlistimage' src='$htmlPath/thumb$fileItem' width='80' height='60'></a>");
