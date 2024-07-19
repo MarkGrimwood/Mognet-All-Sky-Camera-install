@@ -13,6 +13,7 @@ then
   WEBPATH="/var/www/html"
   DATESTAMP=$(date +'%s')
   HUMANDATE=$(date +'%c')
+  HUMANTIME=$(date +'%H%M')
 
   STANDARDCAPTURE="$WORKPATH/webcam.jpg"
 
@@ -23,7 +24,7 @@ then
     ADDMOVIE="movieaddday.mp4"
     UPDATEDMOVIE="movieupdatedday.mp4"
     MOVIELIST="daylist.txt"
-    WEBCAMPD="webcamday$DATESTAMP.jpg"
+    WEBCAMPD="webcamday$DATESTAMP-$HUMANTIME.jpg"
   else
     PERIOD="night"
     FILEFILTER="webcamnight*.jpg"
@@ -31,7 +32,7 @@ then
     ADDMOVIE="movieaddnight.mp4"
     UPDATEDMOVIE="movieupdatednight.mp4"
     MOVIELIST="nightlist.txt"
-    WEBCAMPD="webcamnight$DATESTAMP.jpg"
+    WEBCAMPD="webcamnight$DATESTAMP-$HUMANTIME.jpg"
   fi
 
   CPU_TEMP_FULL=$(vcgencmd measure_temp)
