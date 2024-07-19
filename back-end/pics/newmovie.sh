@@ -27,6 +27,7 @@ STANDARDCAPTURE="$WORKPATH/webcam.jpg"
 
 DATESTAMP=$(date +'%s')
 HUMANDATE=$(date +'%c')
+HUMANTIME=$(date +'%H%M')
 
 echo $HUMANDATE
 
@@ -34,12 +35,12 @@ if [ "$PERIOD" == "day" ]; then
   THISMOVIE="movieday.mp4"
   ADDMOVIE="movieaddday.mp4"
   MOVIELIST="daylist.txt"
-  WEBCAMPD="webcamday$DATESTAMP"
+  WEBCAMPD="webcamday$DATESTAMP-$HUMANTIME"
 else
   THISMOVIE="movienight.mp4"
   ADDMOVIE="movieaddnight.mp4"
   MOVIELIST="nightlist.txt"
-  WEBCAMPD="webcamnight$DATESTAMP"
+  WEBCAMPD="webcamnight$DATESTAMP-$HUMANTIME"
 fi
 
 CPU_TEMP_FULL=$(vcgencmd measure_temp)
