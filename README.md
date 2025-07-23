@@ -14,7 +14,7 @@ You will need to know your latitude and longitude. An approximate location is fi
 
 ## Installation
 
-Initialise the memory card with a version of Raspbian. For the RPi Zero Raspbian Lite is probably the best version to go for
+Initialise the memory card with a 32-bit version of Raspbian. For the RPi Zero Raspbian Lite is probably the best version to go for
 Set up on the card for wifi and ssh
 Then assemble the RPi, camera and power supply, insert the card and turn it on. Give it a couple minutes to sort itself out. Don't forget to do the standard updates as per https://www.raspberrypi.org/documentation/raspbian/updating.md
 
