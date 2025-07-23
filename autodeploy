@@ -151,22 +151,6 @@ function testLatLong() {
   return $ret
 }
 
-function camera_check() {
-  success=1
-  VCSUPPORTED=$(vcgencmd get_camera | grep supported=1 | wc -l)
-  VCENABLED=$(vcgencmd get_camera | grep detected=1 | wc -l)
-
-  if [ $VCSUPPORTED -eq 0 ]; then
-    echo "Please enable the camera through raspi-config before installing"
-    success=0
-  elif [ $VCENABLED -eq 0 ]; then
-    echo "Please connect the camera before installing"
-    success=0
-  fi
-
-  return $success
-}
-
 CURRENTDIRECTORY=$PWD
 INSTALLDIRECTORY=~/Mognet-All-Sky-Camera
 
@@ -179,14 +163,9 @@ clear
 echo "Welcome to the setup stage of Mognet's All Sky Camera"
 echo "====================================================="
 echo -e "\nVersion 1.2.6\n"
-camera_check
-if [ $? -eq 1 ]; then
-  echo "This script has is intended to be run on a Raspberry Pi, preferably with a clean install of Raspian"
-  echo "As part of the install process lighttpd, ffmpeg and imagemagick will be installed, the /var/www/html/ directory will be wiped and the front end code copied into it, and a cron job running once per minute during the day and every two minutes at night will be started to run 24 hours a day"
-  echo "If you are certain that you want to proceed then answer Y to continue, otherwise N or Ctrl-C to exit"
-else
-  installGood=0
-fi
+echo "This script has is intended to be run on a Raspberry Pi, preferably with a clean install of Raspian"
+echo "As part of the install process lighttpd, ffmpeg and imagemagick will be installed, the /var/www/html/ directory will be wiped and the front end code copied into it, and a cron job running once per minute day and night will be started."
+echo "If you are certain that you want to proceed then answer Y to continue, otherwise N or Ctrl-C to exit"
 
 while [ $installGood -eq -1 ]; do
   read installConfirm

@@ -27,6 +27,9 @@ include 'fileread.php';
           <td><a href="shotlist.php?period=current&source=day">Images</a></td>
         </tr>
 <?php
+// Initialise the destination array as empty
+$directoryList = array();
+
 // Directory existance check
 $dirPath = "/var/www/html/history";
 $dir = opendir($dirPath) or die("Cannot open directory ".$dirPath);

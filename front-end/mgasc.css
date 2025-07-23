@@ -3,10 +3,6 @@ body {
   color: white;
 }
 
-table.shotlist {
-  width: 100%;
-}
-
 table, th, td {
   text-align: center;
   border: 1px solid gray;
@@ -51,4 +47,23 @@ a:visited {
 img {
   max-width: 100%;
   height: auto;
+}
+
+div.shotlist {
+  border: 1px solid gray;
+  float: left;
+  min-width: 120px;
+  margin: 5px;
+}
+
+.shotlistimage {
+  display: block;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5px;
+}
+
+.shotlisttext {
+  text-align: center;
 }
