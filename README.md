@@ -43,6 +43,14 @@ The install directory and zip file can now be removed:
 
 # Version History
 
+## v1.27 - 23rd July 2025
+
+* Fix to use V3 camera and rpicam-still
+* Fix daylight saving time handling bug in shotlist.php
+* Improve display in shotlist.php
+* Fix first time period bug in index.php
+* Cater for occasional failed image capture in newmovie.sh
+
 ## v1.2.6 - 13th October 2021
 
 * Fix minor bug in new movie file clearance
